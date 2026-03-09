@@ -1,0 +1,15 @@
+{
+    "version": "1.0",
+    "title": "Handelsbanken Private Banking - Andas lugnt 640x640",
+    "description": "Handelsbanken Private Banking campaign banner",
+    "width": "640",
+    "height": "640",
+    "events": {
+        "enabled": 0,
+        "list": {}
+    },
+    "clicktags": {
+        "clickTAG": "https://www.handelsbanken.se/sv/privat/spara/private-banking"
+    },
+    "source": "index.html"
+}

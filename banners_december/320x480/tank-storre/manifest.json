@@ -1,0 +1,15 @@
+{
+    "version": "1.0",
+    "title": "Handelsbanken Private Banking - Tank storre 320x480",
+    "description": "Handelsbanken Private Banking campaign banner",
+    "width": "320",
+    "height": "480",
+    "events": {
+        "enabled": 0,
+        "list": {}
+    },
+    "clicktags": {
+        "clickTAG": "https://www.handelsbanken.se/sv/privat/spara/private-banking"
+    },
+    "source": "index.html"
+}

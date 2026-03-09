@@ -1,0 +1,15 @@
+{
+    "version": "1.0",
+    "title": "Handelsbanken Private Banking - Hitta hem 980x600",
+    "description": "Handelsbanken Private Banking campaign banner",
+    "width": "980",
+    "height": "600",
+    "events": {
+        "enabled": 0,
+        "list": {}
+    },
+    "clicktags": {
+        "clickTAG": "https://www.handelsbanken.se/sv/privat/spara/private-banking"
+    },
+    "source": "index.html"
+}
