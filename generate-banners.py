@@ -248,7 +248,7 @@ def generate_index_html(width: int, height: int, title: str, layout, slides):
     .media-pivot.is-y-out {{
       opacity: 0;
       transform: translate(0px, 0px);
-      transition: opacity 900ms cubic-bezier(0.7, 0.0, 0.0, 1.0);
+      transition: opacity 240ms linear;
     }}
     .photo {{
       width: 100%;
@@ -363,7 +363,7 @@ color:#f6f5ee;
       var MEDIA_DELAY = 100;
       var CONTAINER_DELAY = 100;
       var SUBCOPY_DELAY = {subcopy_delay};
-      var EXIT_Y_DELAY = 180;
+      var EXIT_Y_DELAY = 0;
       var EXIT_SUBCOPY_DELAY = 220;
       var SCENE_CLEANUP_MS = 1200;
       var SCENE_HANDOFF_DELAY = 220;
