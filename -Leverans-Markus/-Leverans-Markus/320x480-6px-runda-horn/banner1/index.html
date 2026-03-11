@@ -35,7 +35,7 @@
       height: 100%;
       overflow: hidden;
       cursor: pointer;
-      background: #005ea8;
+background:#005FA5;
     }
     .slide-scene {
       position: absolute;
@@ -83,10 +83,9 @@
     .subtext {
       position: absolute;
       z-index: 2;
-      color: #fff;
+color:#f6f5ee;
       margin: 0;
       font-weight: 700;
-      letter-spacing: -0.04em;
     }
     .headline {
       white-space: normal;
@@ -98,6 +97,7 @@
       opacity: 0;
       transform: translate(0px, 36px);
       will-change: transform, opacity;
+      letter-spacing: 0.005em;
     }
     .headline-pivot.is-y {
       opacity: 1;
@@ -131,6 +131,7 @@
     }
     .copy-pivot {
       opacity: 0;
+     letter-spacing: -0.01em;
       transform: translate(46px, 0px);
       will-change: transform, opacity;
     }
@@ -160,25 +161,25 @@
 <body>
   <div class="banner" id="banner">
     <div class="slide-scene is-active">
-      <div class="photo-frame media-pivot" style="left: 21px; top: 21px; width: 278px; height: 172px; border-radius: 6px;">
+      <div class="photo-frame media-pivot" style="left: 21px; top: 21px; width: 278px; height: 138px; border-radius: 6px;">
         <img class="photo" src="images/slide1.jpg" alt="" draggable="false">
       </div>
-      <div class="headline headline-pivot" style="left: 21px; top: 221px; width: 278px; font-size: 54px; line-height: 50px;">Hitta hem med personligt bolån</div>
-      <div class="subtext copy-pivot" style="left: 21px; top: 382px; width: 255px; font-size: 18px; line-height: 18px;">Sök lånelöfte i en bank nära dig</div>
+      <div class="headline headline-pivot" style="left: 21px; top: 181px; width: 278px; font-size: 36px; line-height: 36px;">Hitta hem<br>med personligt<br>bolån</div>
+      <div class="subtext copy-pivot" style="left: 21px; top: 306px; width: 255px; font-size: 15px; line-height: 15px;">Sök lånelöfte i en bank nära dig</div>
     </div>
     <div class="slide-scene">
-      <div class="photo-frame media-pivot" style="left: 21px; top: 21px; width: 278px; height: 172px; border-radius: 6px;">
+      <div class="photo-frame media-pivot" style="left: 21px; top: 21px; width: 278px; height: 138px; border-radius: 6px;">
         <img class="photo" src="images/slide2.jpg" alt="" draggable="false">
       </div>
-      <div class="headline headline-pivot" style="left: 21px; top: 221px; width: 278px; font-size: 54px; line-height: 50px;">Hitta hem med personligt bolån</div>
-      <div class="subtext copy-pivot" style="left: 21px; top: 382px; width: 255px; font-size: 18px; line-height: 18px;">Få individuellt låneerbjudande i en bank nära dig</div>
+      <div class="headline headline-pivot" style="left: 21px; top: 181px; width: 278px; font-size: 36px; line-height: 36px;">Hitta hem<br>med personligt<br>bolån</div>
+      <div class="subtext copy-pivot" style="left: 21px; top: 306px; width: 255px; font-size: 15px; line-height: 15px;">Få individuellt låneerbjudande<br>i en bank nära dig</div>
     </div>
     <div class="slide-scene">
-      <div class="photo-frame media-pivot" style="left: 21px; top: 21px; width: 278px; height: 172px; border-radius: 6px;">
+      <div class="photo-frame media-pivot" style="left: 21px; top: 21px; width: 278px; height: 138px; border-radius: 6px;">
         <img class="photo" src="images/slide3.jpg" alt="" draggable="false">
       </div>
-      <div class="headline headline-pivot" style="left: 21px; top: 221px; width: 278px; font-size: 54px; line-height: 50px;">Ett bolån lika personligt som ditt hem</div>
-      <div class="subtext copy-pivot" style="left: 21px; top: 382px; width: 255px; font-size: 18px; line-height: 18px;">Få individuellt låneerbjudande i en bank nära dig</div>
+      <div class="headline headline-pivot" style="left: 21px; top: 181px; width: 278px; font-size: 36px; line-height: 36px;">Ett bolån lika personligt som ditt hem</div>
+      <div class="subtext copy-pivot" style="left: 21px; top: 306px; width: 255px; font-size: 15px; line-height: 15px;">Få individuellt låneerbjudande<br>i en bank nära dig</div>
     </div>
     <img class="wordmark" src="HB Wordmark HN9 RGB.svg" alt="Handelsbanken" draggable="false">
     <div class="click-layer" id="clickLayer" aria-label="Open"></div>
@@ -234,8 +235,24 @@
           return;
         }
 
-        var text = headline.textContent.trim();
-        if (!text) {
+        var segments = headline.innerHTML.split(/<br\s*\/?>/i).map(function (part) {
+          var temp = document.createElement('div');
+          temp.innerHTML = part;
+          return temp.textContent.replace(/\s+/g, ' ').trim();
+        }).filter(function (part) {
+          return part.length > 0;
+        });
+
+        if (!segments.length) {
+          var fallbackText = headline.textContent.replace(/\s+/g, ' ').trim();
+          if (!fallbackText) {
+            headline.dataset.linesReady = 'true';
+            return;
+          }
+          segments = [fallbackText];
+        }
+
+        if (!segments.length) {
           headline.dataset.linesReady = 'true';
           return;
         }
@@ -257,27 +274,29 @@
         measure.style.whiteSpace = 'normal';
         document.body.appendChild(measure);
 
-        var words = text.split(/\s+/);
         var lines = [];
-        var currentLine = '';
+        segments.forEach(function (segment) {
+          var words = segment.split(/\s+/);
+          var currentLine = '';
 
-        words.forEach(function (word) {
-          var candidate = currentLine ? currentLine + ' ' + word : word;
-          measure.textContent = candidate;
-          if (measure.getBoundingClientRect().height > lineHeight * 1.5 && currentLine) {
+          words.forEach(function (word) {
+            var candidate = currentLine ? currentLine + ' ' + word : word;
+            measure.textContent = candidate;
+            if (measure.getBoundingClientRect().height > lineHeight * 1.5 && currentLine) {
+              lines.push(currentLine);
+              currentLine = word;
+            } else {
+              currentLine = candidate;
+            }
+          });
+
+          if (currentLine) {
             lines.push(currentLine);
-            currentLine = word;
-          } else {
-            currentLine = candidate;
           }
         });
 
-        if (currentLine) {
-          lines.push(currentLine);
-        }
-
         measure.remove();
-        headline.textContent = '';
+        headline.innerHTML = '';
         lines.forEach(function (lineText) {
           var line = document.createElement('span');
           line.className = 'headline-line';

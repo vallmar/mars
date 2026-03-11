@@ -30,7 +30,7 @@ LAYOUTS = {
     '300x250': {
         'show_photo': False,
         'headline': 'left: 18px; top: 16px; width: 264px; font-size: 29px; line-height: 27px;',
-        'subtext': 'left: 18px; top: 142px; width: 210px; font-size: 14px; line-height: 14px;',
+      'subtext': 'left: 18px; top: 141px; width: 210px; font-size: 14px; line-height: 14px;',
         'logo': 'left: 18px; bottom: 16px; width: 214px;',
     'text_pivot_x': '38px',
     'image_pivot_y': '36px',
@@ -39,7 +39,7 @@ LAYOUTS = {
     '320x320': {
         'show_photo': False,
         'headline': 'left: 20px; top: 16px; width: 278px; font-size: 31px; line-height: 29px;',
-        'subtext': 'left: 20px; top: 156px; width: 236px; font-size: 14px; line-height: 14px;',
+      'subtext': 'left: 20px; top: 141px; width: 236px; font-size: 14px; line-height: 14px;',
         'logo': 'left: 20px; bottom: 18px; width: 245px;',
     'text_pivot_x': '46px',
     'image_pivot_y': '36px',
@@ -139,6 +139,12 @@ def load_copy_map(path: Path):
     return {entry['slide'].lower(): entry for entry in data['slides']}
 
 
+def render_copy_html(text: str):
+  escaped = html.escape(text)
+  escaped = re.sub(r'(?i)&lt;br\s*/?&gt;', '<br>', escaped)
+  return escaped.replace('\r\n', '\n').replace('\r', '\n').replace('\n', '<br>')
+
+
 def render_slide_markup(slides, layout):
     chunks = []
     for index, slide in enumerate(slides, start=1):
@@ -153,8 +159,8 @@ def render_slide_markup(slides, layout):
         chunks.append(
             '    <div class="slide-scene' + active_class + '">\n'
             + photo_markup
-      + f'      <div class="headline headline-pivot" style="{layout["headline"]}">{html.escape(slide["headline"])}</div>\n'
-      + f'      <div class="subtext copy-pivot" style="{layout["subtext"]}">{html.escape(slide["subtext"])}</div>\n'
+        + f'      <div class="headline headline-pivot" style="{layout["headline"]}">{render_copy_html(slide["headline"])}</div>\n'
+        + f'      <div class="subtext copy-pivot" style="{layout["subtext"]}">{render_copy_html(slide["subtext"])}</div>\n'
             + '    </div>'
         )
     return '\n'.join(chunks)
@@ -254,7 +260,7 @@ def generate_index_html(width: int, height: int, title: str, layout, slides):
     .subtext {{
       position: absolute;
       z-index: 2;
-      color: #fff;
+color:#f6f5ee;
       margin: 0;
       font-weight: 700;
       letter-spacing: -0.04em;
@@ -385,8 +391,24 @@ def generate_index_html(width: int, height: int, title: str, layout, slides):
           return;
         }}
 
-        var text = headline.textContent.trim();
-        if (!text) {{
+        var segments = headline.innerHTML.split(/<br\s*\/?>/i).map(function (part) {{
+          var temp = document.createElement('div');
+          temp.innerHTML = part;
+          return temp.textContent.replace(/\s+/g, ' ').trim();
+        }}).filter(function (part) {{
+          return part.length > 0;
+        }});
+
+        if (!segments.length) {{
+          var fallbackText = headline.textContent.replace(/\s+/g, ' ').trim();
+          if (!fallbackText) {{
+            headline.dataset.linesReady = 'true';
+            return;
+          }}
+          segments = [fallbackText];
+        }}
+
+        if (!segments.length) {{
           headline.dataset.linesReady = 'true';
           return;
         }}
@@ -408,27 +430,29 @@ def generate_index_html(width: int, height: int, title: str, layout, slides):
         measure.style.whiteSpace = 'normal';
         document.body.appendChild(measure);
 
-        var words = text.split(/\\s+/);
         var lines = [];
-        var currentLine = '';
+        segments.forEach(function (segment) {{
+          var words = segment.split(/\s+/);
+          var currentLine = '';
 
-        words.forEach(function (word) {{
-          var candidate = currentLine ? currentLine + ' ' + word : word;
-          measure.textContent = candidate;
-          if (measure.getBoundingClientRect().height > lineHeight * 1.5 && currentLine) {{
+          words.forEach(function (word) {{
+            var candidate = currentLine ? currentLine + ' ' + word : word;
+            measure.textContent = candidate;
+            if (measure.getBoundingClientRect().height > lineHeight * 1.5 && currentLine) {{
+              lines.push(currentLine);
+              currentLine = word;
+            }} else {{
+              currentLine = candidate;
+            }}
+          }});
+
+          if (currentLine) {{
             lines.push(currentLine);
-            currentLine = word;
-          }} else {{
-            currentLine = candidate;
           }}
         }});
 
-        if (currentLine) {{
-          lines.push(currentLine);
-        }}
-
         measure.remove();
-        headline.textContent = '';
+        headline.innerHTML = '';
         lines.forEach(function (lineText) {{
           var line = document.createElement('span');
           line.className = 'headline-line';
