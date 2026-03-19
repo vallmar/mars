@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import html
 import json
+import os
 import re
 import shutil
 from pathlib import Path
@@ -16,6 +17,7 @@ SLIDE_KEYS = {
     1: ['1a', '1b', '1c'],
     2: ['2a', '2b', '2c'],
 }
+ALL_SLIDES = [slide for slides in SLIDE_KEYS.values() for slide in slides]
 LAYOUTS = {
     '250x600-6px-runda-horn': {
         'show_photo': True,
@@ -145,36 +147,37 @@ def render_copy_html(text: str):
   return escaped.replace('\r\n', '\n').replace('\r', '\n').replace('\n', '<br>')
 
 
-def render_slide_markup(slides, layout):
-    chunks = []
-    for index, slide in enumerate(slides, start=1):
-        active_class = ' is-active' if index == 1 else ''
-        photo_markup = ''
-        if layout['show_photo']:
-            photo_markup = (
-        f'      <div class="photo-frame media-pivot" style="{layout["photo_frame"]}">\n'
-                f'        <img class="photo" src="{slide["image_src"]}" alt="" draggable="false">\n'
-                '      </div>\n'
-            )
-        chunks.append(
-            '    <div class="slide-scene' + active_class + '">\n'
-            + photo_markup
-        + f'      <div class="headline headline-pivot" style="{layout["headline"]}">{render_copy_html(slide["headline"])}</div>\n'
-        + f'      <div class="subtext copy-pivot" style="{layout["subtext"]}">{render_copy_html(slide["subtext"])}</div>\n'
-            + '    </div>'
+def render_slide_markup(slide, layout):
+    photo_markup = ''
+    if layout['show_photo']:
+        photo_markup = (
+            '      <div class="media-stage media-y">\n'
+            f'        <div class="photo-frame media-x" style="{layout["photo_frame"]}">\n'
+            f'          <img class="photo" src="{slide["image_src"]}" alt="" draggable="false">\n'
+            '        </div>\n'
+            '      </div>\n'
         )
-    return '\n'.join(chunks)
+
+    return (
+        '    <div class="slide-scene is-active">\n'
+        + photo_markup
+        + '      <div class="headline-stage headline-y">\n'
+        + f'        <div class="headline" style="{layout["headline"]}">{render_copy_html(slide["headline"])}</div>\n'
+        + '      </div>\n'
+        + '      <div class="subtext-stage subtext-y">\n'
+        + f'        <div class="subtext copy-x" style="{layout["subtext"]}">{render_copy_html(slide["subtext"])}</div>\n'
+        + '      </div>\n'
+        + '    </div>'
+    )
 
 
-def generate_index_html(width: int, height: int, title: str, layout, slides):
-    slides_markup = render_slide_markup(slides, layout)
-    preload_sources = [slide['image_src'] for slide in slides if slide.get('image_src')]
+def generate_index_html(width: int, height: int, title: str, layout, slide, shared_font_src: str, shared_logo_src: str):
+    slides_markup = render_slide_markup(slide, layout)
+    preload_sources = [slide['image_src']] if slide.get('image_src') else []
     preload_json = json.dumps(preload_sources, ensure_ascii=False)
     text_pivot_x = layout['text_pivot_x']
     image_pivot_y = layout['image_pivot_y']
     subcopy_delay = layout['subcopy_delay']
-    exit_x = f'{width + 120}px'
-    exit_y = f'{height + 120}px'
     return f'''<!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -193,7 +196,7 @@ def generate_index_html(width: int, height: int, title: str, layout, slides):
   <style>
     @font-face {{
       font-family: 'Handelsbanken Sans';
-      src: url('HandelsbankenSans-Bold.woff2') format('woff2');
+      src: url('{html.escape(shared_font_src)}') format('woff2');
       font-weight: 700;
       font-style: normal;
       font-display: swap;
@@ -217,50 +220,65 @@ def generate_index_html(width: int, height: int, title: str, layout, slides):
     .slide-scene {{
       position: absolute;
       inset: 0;
-      opacity: 0;
-      pointer-events: none;
-      will-change: opacity;
-    }}
-    .slide-scene.is-active {{
-      opacity: 1;
       pointer-events: auto;
       z-index: 1;
-    }}
-    .slide-scene.is-exiting {{
-      opacity: 1;
-      z-index: 2;
     }}
     .photo-frame {{
       position: absolute;
       overflow: hidden;
       z-index: 1;
     }}
-    .media-pivot {{
-      opacity: 0;
+    .media-stage,
+    .headline-stage,
+    .subtext-stage {{
+      position: absolute;
+      inset: 0;
+    }}
+    .media-y,
+    .headline-y,
+    .subtext-y {{
       transform: translate(0px, {image_pivot_y});
-      will-change: transform, opacity;
+      will-change: transform;
     }}
-    .media-pivot.is-y {{
-      opacity: 1;
+    .media-y.is-ready,
+    .headline-y.is-ready,
+    .subtext-y.is-ready {{
       transform: translate(0px, 0px);
-      transition: transform 900ms cubic-bezier(0.7, 0.0, 0.0, 1.0), opacity 900ms cubic-bezier(0.7, 0.0, 0.0, 1.0);
+      transition: transform 1000ms cubic-bezier(0.7, 0.0, 0.0, 1.0);
     }}
-    .media-pivot.is-y-out {{
-      opacity: 0;
+    .media-x,
+    .headline-line,
+    .copy-x {{
+      transform: translate({text_pivot_x}, 0px);
+      will-change: transform;
+    }}
+    .media-x.is-ready,
+    .headline-line.is-ready,
+    .copy-x.is-ready {{
       transform: translate(0px, 0px);
-      transition: opacity 240ms linear;
+      transition: transform 1000ms cubic-bezier(0.7, 0.0, 0.0, 1.0);
     }}
     .photo {{
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
+      transform-origin: center center;
+      animation: photoZoom 10s linear forwards;
+    }}
+    @keyframes photoZoom {{
+      from {{
+        transform: scale(1);
+      }}
+      to {{
+        transform: scale(1.1);
+      }}
     }}
     .headline,
     .subtext {{
       position: absolute;
       z-index: 2;
-color:#f6f5ee;
+      color:#f6f5ee;
       margin: 0;
       font-weight: 700;
       letter-spacing: -0.04em;
@@ -271,55 +289,13 @@ color:#f6f5ee;
       flex-direction: column;
       gap: 0;
     }}
-    .headline-pivot {{
-      opacity: 0;
-      transform: translate(0px, 36px);
-      will-change: transform, opacity;
-    }}
-    .headline-pivot.is-y {{
-      opacity: 1;
-      transform: translate(0px, 0px);
-      transition: transform 900ms cubic-bezier(0.7, 0.0, 0.0, 1.0), opacity 900ms cubic-bezier(0.7, 0.0, 0.0, 1.0);
-    }}
-    .headline-pivot.is-y-out {{
-      opacity: 0;
-      transform: translate(0px, -{exit_y});
-      transition: transform 900ms cubic-bezier(0.7, 0.0, 0.0, 1.0), opacity 900ms cubic-bezier(0.7, 0.0, 0.0, 1.0);
-    }}
     .headline-line {{
       display: block;
-      opacity: 1;
-      transform: translate({text_pivot_x}, 0px);
-      will-change: transform;
-    }}
-    .headline-line.is-x {{
-      transform: translate(0px, 0px);
-      transition: transform 600ms cubic-bezier(0.7, 0.0, 0.0, 1.0);
-    }}
-    .headline-line.is-x-out {{
-      opacity: 0;
-      transform: translate(calc(-1 * {exit_x}), 0px);
-      transition: transform 600ms cubic-bezier(0.7, 0.0, 0.0, 1.0), opacity 450ms linear;
     }}
     .subtext {{
       white-space: normal;
       letter-spacing: 0.02em;
       font-weight: 700;
-    }}
-    .copy-pivot {{
-      opacity: 0;
-      transform: translate({text_pivot_x}, 0px);
-      will-change: transform, opacity;
-    }}
-    .copy-pivot.is-x {{
-      opacity: 1;
-      transform: translate(0px, 0px);
-      transition: transform 600ms cubic-bezier(0.7, 0.0, 0.0, 1.0), opacity 900ms cubic-bezier(0.7, 0.0, 0.0, 1.0);
-    }}
-    .copy-pivot.is-x-out {{
-      opacity: 0;
-      transform: translate(calc(-1 * {exit_x}), 0px);
-      transition: transform 600ms cubic-bezier(0.7, 0.0, 0.0, 1.0), opacity 450ms linear;
     }}
     .wordmark {{
       position: absolute;
@@ -337,7 +313,7 @@ color:#f6f5ee;
 <body>
   <div class="banner" id="banner">
 {slides_markup}
-    <img class="wordmark" src="HB Wordmark HN9 RGB.svg" alt="Handelsbanken" draggable="false">
+    <img class="wordmark" src="{html.escape(shared_logo_src)}" alt="Handelsbanken" draggable="false">
     <div class="click-layer" id="clickLayer" aria-label="Open"></div>
   </div>
   <script>
@@ -353,20 +329,16 @@ color:#f6f5ee;
       }}
       clickLayer.addEventListener('click', function () {{ window.open(getClickUrl()); }});
 
-      var slides = Array.prototype.slice.call(document.querySelectorAll('.slide-scene'));
-      var current = 0;
-      var displayMs = 3800;
-      var Y_DURATION = 675;
-      var Y_TRANSITION_MS = 900;
-      var X_TRANSITION_MS = 600;
+      var scene = document.querySelector('.slide-scene');
+      var mediaY = document.querySelector('.media-y');
+      var mediaX = document.querySelector('.media-x');
+      var headlineY = document.querySelector('.headline-y');
+      var subtextY = document.querySelector('.subtext-y');
+      var copyX = document.querySelector('.copy-x');
+      var Y_DELAY = 100;
+      var X_DELAY = 900;
       var LINE_STAGGER = 40;
-      var MEDIA_DELAY = 100;
-      var CONTAINER_DELAY = 100;
       var SUBCOPY_DELAY = {subcopy_delay};
-      var EXIT_Y_DELAY = 0;
-      var EXIT_SUBCOPY_DELAY = 220;
-      var SCENE_CLEANUP_MS = 1200;
-      var SCENE_HANDOFF_DELAY = 220;
 
       function preload(list, done) {{
         var remaining = list.length;
@@ -462,151 +434,41 @@ color:#f6f5ee;
         headline.dataset.linesReady = 'true';
       }}
 
-      function queueSceneTimer(scene, callback, delay) {{
-        if (!scene._timers) {{
-          scene._timers = [];
-        }}
-        var timer = window.setTimeout(callback, delay);
-        scene._timers.push(timer);
-      }}
-
-      function clearSceneTimers(scene) {{
-        if (!scene || !scene._timers) {{
+      function run() {{
+        if (!scene) {{
           return;
         }}
-        scene._timers.forEach(function (timer) {{
-          window.clearTimeout(timer);
-        }});
-        scene._timers = [];
-      }}
 
-      function resetScene(scene) {{
-        clearSceneTimers(scene);
-        var media = scene.querySelector('.media-pivot');
-        var headline = scene.querySelector('.headline-pivot');
-        var subcopy = scene.querySelector('.copy-pivot');
-        if (media) {{
-          media.classList.remove('is-y');
-          media.classList.remove('is-y-out');
-        }}
+        var headline = scene.querySelector('.headline');
         if (headline) {{
-          headline.classList.remove('is-y');
-          headline.classList.remove('is-y-out');
           splitHeadlineLines(headline);
-          Array.prototype.forEach.call(headline.querySelectorAll('.headline-line'), function (line) {{
-            line.classList.remove('is-x');
-            line.classList.remove('is-x-out');
-          }});
         }}
-        if (subcopy) {{
-          subcopy.classList.remove('is-x');
-          subcopy.classList.remove('is-x-out');
-        }}
-      }}
 
-      function animateSceneIn(scene) {{
-        resetScene(scene);
-
-        var media = scene.querySelector('.media-pivot');
-        var headline = scene.querySelector('.headline-pivot');
-        var subcopy = scene.querySelector('.copy-pivot');
         var lines = headline ? Array.prototype.slice.call(headline.querySelectorAll('.headline-line')) : [];
-
-        if (media) {{
-          queueSceneTimer(scene, function () {{
-            media.classList.add('is-y');
-          }}, MEDIA_DELAY);
-        }}
-
-        if (headline) {{
-          queueSceneTimer(scene, function () {{
-            headline.classList.add('is-y');
-          }}, CONTAINER_DELAY);
-        }}
-
-        lines.forEach(function (line, index) {{
-          queueSceneTimer(scene, function () {{
-            line.classList.add('is-x');
-          }}, (index * LINE_STAGGER) + Y_DURATION);
-        }});
-
-        if (subcopy) {{
-          queueSceneTimer(scene, function () {{
-            subcopy.classList.add('is-x');
-          }}, SUBCOPY_DELAY + Y_DURATION);
-        }}
-      }}
-
-      function animateSceneOut(scene) {{
-        var media = scene.querySelector('.media-pivot');
-        var headline = scene.querySelector('.headline-pivot');
-        var subcopy = scene.querySelector('.copy-pivot');
-        var lines = headline ? Array.prototype.slice.call(headline.querySelectorAll('.headline-line')) : [];
-
-        clearSceneTimers(scene);
-        scene.classList.add('is-exiting');
-
-        lines.slice().reverse().forEach(function (line, index) {{
-          queueSceneTimer(scene, function () {{
-            line.classList.add('is-x-out');
-          }}, index * LINE_STAGGER);
-        }});
-
-        if (subcopy) {{
-          queueSceneTimer(scene, function () {{
-            subcopy.classList.add('is-x-out');
-          }}, EXIT_SUBCOPY_DELAY);
-        }}
-
-        if (media) {{
-          queueSceneTimer(scene, function () {{
-            media.classList.add('is-y-out');
-          }}, EXIT_Y_DELAY);
-        }}
-
-        queueSceneTimer(scene, function () {{
-          scene.classList.remove('is-active');
-          scene.classList.remove('is-exiting');
-          resetScene(scene);
-        }}, SCENE_CLEANUP_MS);
-      }}
-
-      function show(index) {{
-        var nextScene = slides[index];
-        var currentScene = slides[current];
-
-        if (index === current) {{
-          nextScene.classList.add('is-active');
-          animateSceneIn(nextScene);
-          return;
-        }}
-
-        slides.forEach(function (slide, slideIndex) {{
-          if (slideIndex !== index && slideIndex !== current) {{
-            slide.classList.remove('is-active');
-            slide.classList.remove('is-exiting');
-            resetScene(slide);
-          }}
-        }});
-
-        if (currentScene && currentScene !== nextScene) {{
-          animateSceneOut(currentScene);
-        }}
 
         window.setTimeout(function () {{
-          nextScene.classList.remove('is-exiting');
-          nextScene.classList.add('is-active');
-          animateSceneIn(nextScene);
-        }}, SCENE_HANDOFF_DELAY);
+          [mediaY, headlineY, subtextY].forEach(function (element) {{
+            if (element) {{
+              element.classList.add('is-ready');
+            }}
+          }});
+        }}, Y_DELAY);
 
-        current = index;
-      }}
-
-      function run() {{
-        show(0);
-        setInterval(function () {{
-          show((current + 1) % slides.length);
-        }}, displayMs);
+        window.setTimeout(function () {{
+          if (mediaX) {{
+            mediaX.classList.add('is-ready');
+          }}
+          lines.forEach(function (line, index) {{
+            window.setTimeout(function () {{
+              line.classList.add('is-ready');
+            }}, index * LINE_STAGGER);
+          }});
+          if (copyX) {{
+            window.setTimeout(function () {{
+              copyX.classList.add('is-ready');
+            }}, SUBCOPY_DELAY);
+          }}
+        }}, X_DELAY);
       }}
 
       preload({preload_json}, function () {{
@@ -652,26 +514,29 @@ def resolve_slide_source(format_dir: Path, asset_map, banner_num: int, slide_idx
     )
 
 
-def build_slide_specs(banner_num: int, copy_map, show_photo: bool):
-    specs = []
-    for slide_idx, slide_key in enumerate(SLIDE_KEYS[banner_num], start=1):
-        copy = copy_map[slide_key]
-        specs.append({
-            'headline': copy['headline'],
-            'subtext': copy['subtext'],
-            'image_src': f'images/slide{slide_idx}.jpg' if show_photo else None,
-        })
-    return specs
+def build_banner_spec(slide_key: str, copy_map, show_photo: bool):
+    copy = copy_map[slide_key]
+    return {
+        'slide_key': slide_key,
+        'headline': copy['headline'],
+        'subtext': copy['subtext'],
+        'image_src': None,
+    }
 
 
 def to_web_path(path: Path):
     return str(path).replace('\\', '/')
 
 
-def find_reference_images(format_dir: Path, banner_num: int, width: int, height: int):
+def relative_web_path(target: Path, base_dir: Path):
+    return to_web_path(Path(os.path.relpath(target, base_dir)))
+
+
+def find_reference_images(format_dir: Path, banner_num: int, width: int, height: int, slide_idx: int | None = None):
     ref_root = format_dir / 'Layout' if (format_dir / 'Layout').exists() else format_dir
     references = []
-    for suffix in ('A', 'B', 'C'):
+    suffixes = ('ABC'[slide_idx - 1],) if slide_idx else ('A', 'B', 'C')
+    for suffix in suffixes:
         expected_stem = f'{banner_num}{suffix} {width}x{height}'
         match = next(
             (
@@ -874,39 +739,41 @@ def main():
         for warning in warnings:
             print('  WARN:', warning)
 
-        for banner_num in (1, 2):
-            out_dir = format_dir / f'banner{banner_num}'
-            images_dir = out_dir / 'images'
+        for banner_num, slide_keys in SLIDE_KEYS.items():
+            for slide_idx, slide_key in enumerate(slide_keys, start=1):
+                out_dir = format_dir / f'banner{slide_key}'
+                out_dir.mkdir(parents=True, exist_ok=True)
+                shared_font_src = relative_web_path(shared_font, out_dir)
+                shared_logo_src = relative_web_path(shared_logo, out_dir)
 
-            if layout['show_photo']:
-                images_dir.mkdir(parents=True, exist_ok=True)
-                for slide_idx in (1, 2, 3):
-                    src = resolve_slide_source(format_dir, asset_map, banner_num, slide_idx, width, height)
-                    dst = images_dir / f'slide{slide_idx}.jpg'
-                    copy_slide(src, dst)
-            elif images_dir.exists():
-                shutil.rmtree(images_dir)
+                for stale_asset in (
+                    out_dir / 'HandelsbankenSans-Bold.woff2',
+                    out_dir / 'HB Wordmark HN9 RGB.svg',
+                    out_dir / 'images' / 'slide.jpg',
+                ):
+                    if stale_asset.exists():
+                        stale_asset.unlink()
+                if (out_dir / 'images').exists():
+                    shutil.rmtree(out_dir / 'images')
 
-            if shared_font.exists():
-                shutil.copy2(shared_font, out_dir / shared_font.name)
-            if shared_logo.exists():
-                shutil.copy2(shared_logo, out_dir / shared_logo.name)
+                title = f'Handelsbanken banner{slide_key} {width}x{height}'
+                slide = build_banner_spec(slide_key, copy_map, layout['show_photo'])
+                if layout['show_photo']:
+                    slide_src = resolve_slide_source(format_dir, asset_map, banner_num, slide_idx, width, height)
+                    slide['image_src'] = relative_web_path(slide_src, out_dir)
+                (out_dir / 'index.html').write_text(
+                    generate_index_html(width, height, title, layout, slide, shared_font_src, shared_logo_src),
+                    encoding='utf-8',
+                )
+                (out_dir / 'manifest.json').write_text(generate_manifest(width, height, title), encoding='utf-8')
 
-            title = f'Handelsbanken banner{banner_num} {width}x{height}'
-            slides = build_slide_specs(banner_num, copy_map, layout['show_photo'])
-            (out_dir / 'index.html').write_text(
-                generate_index_html(width, height, title, layout, slides),
-                encoding='utf-8',
-            )
-            (out_dir / 'manifest.json').write_text(generate_manifest(width, height, title), encoding='utf-8')
-
-            index_entries.append({
-              'label': f'{format_dir.name} banner{banner_num}',
-              'width': width,
-              'height': height,
-              'banner_path': to_web_path(out_dir / 'index.html'),
-              'reference_paths': [to_web_path(path) for path in find_reference_images(format_dir, banner_num, width, height)],
-            })
+                index_entries.append({
+                  'label': f'{format_dir.name} banner{slide_key}',
+                  'width': width,
+                  'height': height,
+                  'banner_path': to_web_path(out_dir / 'index.html'),
+                  'reference_paths': [to_web_path(path) for path in find_reference_images(format_dir, banner_num, width, height, slide_idx)],
+                })
 
         (ROOT / 'index.html').write_text(generate_root_index(index_entries), encoding='utf-8')
 

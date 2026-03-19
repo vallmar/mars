@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "title": "Handelsbanken banner2a 980x240",
+  "description": "Handelsbanken campaign banner",
+  "width": "980",
+  "height": "240",
+  "events": {
+    "enabled": 0,
+    "list": {}
+  },
+  "clicktags": {
+    "clickTAG": "https://www.handelsbanken.se/sv/privat/spara/private-banking"
+  },
+  "source": "index.html"
+}

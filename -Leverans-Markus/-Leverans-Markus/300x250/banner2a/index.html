@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    (function() {
+      var src = window.API_URL || 'https://s1.adform.net/banners/scripts/rmb/Adform.DHTML.js?bv=' + Math.random();
+      var script = document.createElement('script');
+      script.src = src;
+      document.head.appendChild(script);
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="ad.size" content="width=300,height=250">
+  <title>Handelsbanken banner2a 300x250</title>
+  <style>
+    @font-face {
+      font-family: 'Handelsbanken Sans';
+      src: url('../../HandelsbankenSans-Bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    html, body {
+      width: 300px;
+      height: 250px;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Handelsbanken Sans', sans-serif;
+    }
+    .banner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      cursor: pointer;
+      background: #005ea8;
+    }
+    .slide-scene {
+      position: absolute;
+      inset: 0;
+      pointer-events: auto;
+      z-index: 1;
+    }
+    .photo-frame {
+      position: absolute;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .media-stage,
+    .headline-stage,
+    .subtext-stage {
+      position: absolute;
+      inset: 0;
+    }
+    .media-y,
+    .headline-y,
+    .subtext-y {
+      transform: translate(0px, 36px);
+      will-change: transform;
+    }
+    .media-y.is-ready,
+    .headline-y.is-ready,
+    .subtext-y.is-ready {
+      transform: translate(0px, 0px);
+      transition: transform 1000ms cubic-bezier(0.7, 0.0, 0.0, 1.0);
+    }
+    .media-x,
+    .headline-line,
+    .copy-x {
+      transform: translate(38px, 0px);
+      will-change: transform;
+    }
+    .media-x.is-ready,
+    .headline-line.is-ready,
+    .copy-x.is-ready {
+      transform: translate(0px, 0px);
+      transition: transform 1000ms cubic-bezier(0.7, 0.0, 0.0, 1.0);
+    }
+    .photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform-origin: center center;
+      animation: photoZoom 10s linear forwards;
+    }
+    @keyframes photoZoom {
+      from {
+        transform: scale(1);
+      }
+      to {
+        transform: scale(1.1);
+      }
+    }
+    .headline,
+    .subtext {
+      position: absolute;
+      z-index: 2;
+      color:#f6f5ee;
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+    }
+    .headline {
+      white-space: normal;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .headline-line {
+      display: block;
+    }
+    .subtext {
+      white-space: normal;
+      letter-spacing: 0.02em;
+      font-weight: 700;
+    }
+    .wordmark {
+      position: absolute;
+      z-index: 3;
+      display: block;
+      left: 18px; bottom: 16px; width: 214px;
+    }
+    .click-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+    }
+  </style>
+</head>
+<body>
+  <div class="banner" id="banner">
+    <div class="slide-scene is-active">
+      <div class="headline-stage headline-y">
+        <div class="headline" style="left: 18px; top: 16px; width: 264px; font-size: 29px; line-height: 27px;">Trygga budgivningen med lånelöfte</div>
+      </div>
+      <div class="subtext-stage subtext-y">
+        <div class="subtext copy-x" style="left: 18px; top: 141px; width: 210px; font-size: 14px; line-height: 14px;">Upptäck våra personliga bolån</div>
+      </div>
+    </div>
+    <img class="wordmark" src="../../HB Wordmark HN9 RGB.svg" alt="Handelsbanken" draggable="false">
+    <div class="click-layer" id="clickLayer" aria-label="Open"></div>
+  </div>
+  <script>
+    (function () {
+      'use strict';
+      var clickLayer = document.getElementById('clickLayer');
+      var defaultClickUrl = 'https://www.handelsbanken.se/sv/privat/bolan';
+      function getClickUrl() {
+        try { if (window.dhtml && typeof dhtml.getVar === 'function') return dhtml.getVar('clickTAG', defaultClickUrl); } catch (e) {}
+        if (typeof window.clickTAG === 'string' && window.clickTAG) return window.clickTAG;
+        if (typeof window.clickTag === 'string' && window.clickTag) return window.clickTag;
+        return defaultClickUrl;
+      }
+      clickLayer.addEventListener('click', function () { window.open(getClickUrl()); });
+
+      var scene = document.querySelector('.slide-scene');
+      var mediaY = document.querySelector('.media-y');
+      var mediaX = document.querySelector('.media-x');
+      var headlineY = document.querySelector('.headline-y');
+      var subtextY = document.querySelector('.subtext-y');
+      var copyX = document.querySelector('.copy-x');
+      var Y_DELAY = 100;
+      var X_DELAY = 900;
+      var LINE_STAGGER = 40;
+      var SUBCOPY_DELAY = 120;
+
+      function preload(list, done) {
+        var remaining = list.length;
+        if (!remaining) {
+          done();
+          return;
+        }
+        list.forEach(function (src) {
+          var img = new Image();
+          img.onload = img.onerror = function () {
+            remaining -= 1;
+            if (!remaining) {
+              done();
+            }
+          };
+          img.src = src;
+        });
+      }
+
+      function splitHeadlineLines(headline) {
+        if (!headline || headline.dataset.linesReady === 'true') {
+          return;
+        }
+
+        var segments = headline.innerHTML.split(/<br\s*\/?>/i).map(function (part) {
+          var temp = document.createElement('div');
+          temp.innerHTML = part;
+          return temp.textContent.replace(/\s+/g, ' ').trim();
+        }).filter(function (part) {
+          return part.length > 0;
+        });
+
+        if (!segments.length) {
+          var fallbackText = headline.textContent.replace(/\s+/g, ' ').trim();
+          if (!fallbackText) {
+            headline.dataset.linesReady = 'true';
+            return;
+          }
+          segments = [fallbackText];
+        }
+
+        if (!segments.length) {
+          headline.dataset.linesReady = 'true';
+          return;
+        }
+
+        var styles = window.getComputedStyle(headline);
+        var lineHeight = parseFloat(styles.lineHeight);
+        var measure = document.createElement('div');
+        measure.style.position = 'absolute';
+        measure.style.visibility = 'hidden';
+        measure.style.pointerEvents = 'none';
+        measure.style.left = '-9999px';
+        measure.style.top = '0';
+        measure.style.width = styles.width;
+        measure.style.fontFamily = styles.fontFamily;
+        measure.style.fontSize = styles.fontSize;
+        measure.style.fontWeight = styles.fontWeight;
+        measure.style.letterSpacing = styles.letterSpacing;
+        measure.style.lineHeight = styles.lineHeight;
+        measure.style.whiteSpace = 'normal';
+        document.body.appendChild(measure);
+
+        var lines = [];
+        segments.forEach(function (segment) {
+          var words = segment.split(/\s+/);
+          var currentLine = '';
+
+          words.forEach(function (word) {
+            var candidate = currentLine ? currentLine + ' ' + word : word;
+            measure.textContent = candidate;
+            if (measure.getBoundingClientRect().height > lineHeight * 1.5 && currentLine) {
+              lines.push(currentLine);
+              currentLine = word;
+            } else {
+              currentLine = candidate;
+            }
+          });
+
+          if (currentLine) {
+            lines.push(currentLine);
+          }
+        });
+
+        measure.remove();
+        headline.innerHTML = '';
+        lines.forEach(function (lineText) {
+          var line = document.createElement('span');
+          line.className = 'headline-line';
+          line.textContent = lineText;
+          headline.appendChild(line);
+        });
+        headline.dataset.linesReady = 'true';
+      }
+
+      function run() {
+        if (!scene) {
+          return;
+        }
+
+        var headline = scene.querySelector('.headline');
+        if (headline) {
+          splitHeadlineLines(headline);
+        }
+
+        var lines = headline ? Array.prototype.slice.call(headline.querySelectorAll('.headline-line')) : [];
+
+        window.setTimeout(function () {
+          [mediaY, headlineY, subtextY].forEach(function (element) {
+            if (element) {
+              element.classList.add('is-ready');
+            }
+          });
+        }, Y_DELAY);
+
+        window.setTimeout(function () {
+          if (mediaX) {
+            mediaX.classList.add('is-ready');
+          }
+          lines.forEach(function (line, index) {
+            window.setTimeout(function () {
+              line.classList.add('is-ready');
+            }, index * LINE_STAGGER);
+          });
+          if (copyX) {
+            window.setTimeout(function () {
+              copyX.classList.add('is-ready');
+            }, SUBCOPY_DELAY);
+          }
+        }, X_DELAY);
+      }
+
+      preload([], function () {
+        requestAnimationFrame(run);
+      });
+    })();
+  </script>
+</body>
+</html>
