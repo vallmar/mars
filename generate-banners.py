@@ -572,7 +572,7 @@ def generate_root_index(entries):
             f'        <div class="banner-meta">\n'
             f'          <h2>{html.escape(entry["label"])}</h2>\n'
             f'          <p>{entry["width"]}x{entry["height"]}</p>\n'
-            f'          <a class="banner-link" href="{html.escape(entry["banner_path"])}" target="_blank" rel="noopener noreferrer">Open banner</a>\n'
+            f'          <a class="banner-link" href="{html.escape(entry["banner_path"])}" target="_blank" rel="noopener noreferrer">Öppna</a>\n'
             '        </div>\n'
             '        <div class="ref-grid">\n'
             f'{reference_markup}'
@@ -707,8 +707,7 @@ def generate_root_index(entries):
 </head>
 <body>
   <main>
-    <h1>Banner Viewer</h1>
-    <p class="intro">Open any generated banner in a new tab. Each row also shows the three reference images scaled to stay easy to compare, even for the largest formats.</p>
+    <h1>Banners</h1>
     <div class="banner-list">
 {chr(10).join(sections)}
     </div>
