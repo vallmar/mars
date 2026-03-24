@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="sv">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -14,36 +15,43 @@
       --link-bg: #005ea8;
       --link-text: #ffffff;
     }
+
     * {
       box-sizing: border-box;
     }
+
     body {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
       background: linear-gradient(180deg, #f8f4ea 0%, var(--page-bg) 100%);
       color: var(--text);
     }
+
     main {
       max-width: 1440px;
       margin: 0 auto;
       padding: 32px 20px 48px;
     }
+
     h1 {
       margin: 0 0 10px;
       font-size: 34px;
       line-height: 1.05;
       font-weight: 700;
     }
+
     .intro {
       margin: 0 0 28px;
       color: var(--muted);
       font-size: 16px;
       line-height: 1.4;
     }
+
     .banner-list {
       display: grid;
       gap: 18px;
     }
+
     .banner-card {
       display: grid;
       grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
@@ -55,16 +63,19 @@
       background: rgba(255, 255, 255, 0.92);
       box-shadow: 0 10px 30px rgba(31, 30, 25, 0.08);
     }
+
     .banner-meta h2 {
       margin: 0 0 6px;
       font-size: 22px;
       line-height: 1.1;
     }
+
     .banner-meta p {
       margin: 0 0 14px;
       color: var(--muted);
       font-size: 14px;
     }
+
     .banner-link {
       display: inline-block;
       padding: 10px 14px;
@@ -75,11 +86,13 @@
       font-size: 14px;
       font-weight: 700;
     }
+
     .ref-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
     }
+
     .ref-card {
       margin: 0;
       padding: 10px;
@@ -87,6 +100,7 @@
       border-radius: 14px;
       background: var(--card-bg);
     }
+
     .ref-card img {
       display: block;
       width: 100%;
@@ -97,584 +111,433 @@
       background: #eef2f5;
       border-radius: 8px;
     }
+
     .ref-card figcaption {
       margin-top: 8px;
       color: var(--muted);
       font-size: 12px;
       text-align: center;
     }
+
     .ref-empty {
       margin: 0;
       color: var(--muted);
       font-size: 14px;
     }
+
     @media (max-width: 960px) {
       .banner-card {
         grid-template-columns: 1fr;
       }
     }
+
     @media (max-width: 700px) {
       .ref-grid {
         grid-template-columns: 1fr;
       }
+
       .ref-card img {
         max-height: min(24vh, 180px);
       }
     }
   </style>
 </head>
+
 <body>
   <main>
     <h1>Banner Viewer</h1>
-    <p class="intro">Open any generated banner in a new tab. Each row also shows the three reference images scaled to stay easy to compare, even for the largest formats.</p>
+    <p class="intro">Open any generated banner in a new tab. Each row also shows the three reference images scaled to
+      stay easy to compare, even for the largest formats.</p>
     <div class="banner-list">
       <section class="banner-card">
         <div class="banner-meta">
           <h2>250x600-6px-runda-horn banner1a</h2>
           <p>250x600</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/250x600-6px-runda-horn/banner1a/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/250x600-6px-runda-horn/banner1a/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/250x600-6px-runda-horn/Layout/1A 250x600.jpg" alt="Reference 1 for 250x600-6px-runda-horn banner1a" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>250x600-6px-runda-horn banner1b</h2>
           <p>250x600</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/250x600-6px-runda-horn/banner1b/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/250x600-6px-runda-horn/banner1b/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/250x600-6px-runda-horn/Layout/1B 250x600.jpg" alt="Reference 1 for 250x600-6px-runda-horn banner1b" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>250x600-6px-runda-horn banner1c</h2>
           <p>250x600</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/250x600-6px-runda-horn/banner1c/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/250x600-6px-runda-horn/banner1c/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/250x600-6px-runda-horn/Layout/1C 250x600.jpg" alt="Reference 1 for 250x600-6px-runda-horn banner1c" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>250x600-6px-runda-horn banner2a</h2>
           <p>250x600</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/250x600-6px-runda-horn/banner2a/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/250x600-6px-runda-horn/banner2a/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/250x600-6px-runda-horn/Layout/2A 250x600.jpg" alt="Reference 1 for 250x600-6px-runda-horn banner2a" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>250x600-6px-runda-horn banner2b</h2>
           <p>250x600</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/250x600-6px-runda-horn/banner2b/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/250x600-6px-runda-horn/banner2b/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/250x600-6px-runda-horn/Layout/2B 250x600.jpg" alt="Reference 1 for 250x600-6px-runda-horn banner2b" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>250x600-6px-runda-horn banner2c</h2>
           <p>250x600</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/250x600-6px-runda-horn/banner2c/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/250x600-6px-runda-horn/banner2c/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/250x600-6px-runda-horn/Layout/2C 250x600.jpg" alt="Reference 1 for 250x600-6px-runda-horn banner2c" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>300x250 banner1a</h2>
           <p>300x250</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/300x250/banner1a/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/300x250/banner1a/index.html" target="_blank"
+            rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/300x250/1A 300x250.jpg" alt="Reference 1 for 300x250 banner1a" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>300x250 banner1b</h2>
           <p>300x250</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/300x250/banner1b/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/300x250/banner1b/index.html" target="_blank"
+            rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/300x250/1B 300x250.jpg" alt="Reference 1 for 300x250 banner1b" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>300x250 banner1c</h2>
           <p>300x250</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/300x250/banner1c/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/300x250/banner1c/index.html" target="_blank"
+            rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/300x250/1C 300x250.jpg" alt="Reference 1 for 300x250 banner1c" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>300x250 banner2a</h2>
           <p>300x250</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/300x250/banner2a/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/300x250/banner2a/index.html" target="_blank"
+            rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/300x250/2A 300x250.jpg" alt="Reference 1 for 300x250 banner2a" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>300x250 banner2b</h2>
           <p>300x250</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/300x250/banner2b/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/300x250/banner2b/index.html" target="_blank"
+            rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/300x250/2B 300x250.jpg" alt="Reference 1 for 300x250 banner2b" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>300x250 banner2c</h2>
           <p>300x250</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/300x250/banner2c/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/300x250/banner2c/index.html" target="_blank"
+            rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/300x250/2C 300x250.jpg" alt="Reference 1 for 300x250 banner2c" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>320x320 banner1a</h2>
           <p>320x320</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x320/banner1a/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x320/banner1a/index.html" target="_blank"
+            rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/320x320/1A 320x320.jpg" alt="Reference 1 for 320x320 banner1a" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>320x320 banner1b</h2>
           <p>320x320</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x320/banner1b/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x320/banner1b/index.html" target="_blank"
+            rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/320x320/1B 320x320.jpg" alt="Reference 1 for 320x320 banner1b" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>320x320 banner1c</h2>
           <p>320x320</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x320/banner1c/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x320/banner1c/index.html" target="_blank"
+            rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/320x320/1C 320x320.jpg" alt="Reference 1 for 320x320 banner1c" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>320x320 banner2a</h2>
           <p>320x320</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x320/banner2a/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x320/banner2a/index.html" target="_blank"
+            rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/320x320/2A 320x320.jpg" alt="Reference 1 for 320x320 banner2a" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>320x320 banner2b</h2>
           <p>320x320</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x320/banner2b/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x320/banner2b/index.html" target="_blank"
+            rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/320x320/2B 320x320.jpg" alt="Reference 1 for 320x320 banner2b" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>320x320 banner2c</h2>
           <p>320x320</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x320/banner2c/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x320/banner2c/index.html" target="_blank"
+            rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/320x320/2C 320x320.jpg" alt="Reference 1 for 320x320 banner2c" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
+
+      </section>
+      <section class="banner-card">
+        <div class="banner-meta">
+          <h2>320x320 banner2c</h2>
+          <p>320x320</p>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x320/banner2c/index.html" target="_blank"
+            rel="noopener noreferrer">Open banner</a>
         </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>320x480-6px-runda-horn banner1a</h2>
           <p>320x480</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x480-6px-runda-horn/banner1a/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x480-6px-runda-horn/banner1a/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/320x480-6px-runda-horn/Layout/1A 320x480.jpg" alt="Reference 1 for 320x480-6px-runda-horn banner1a" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>320x480-6px-runda-horn banner1b</h2>
           <p>320x480</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x480-6px-runda-horn/banner1b/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x480-6px-runda-horn/banner1b/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/320x480-6px-runda-horn/Layout/1B 320x480.jpg" alt="Reference 1 for 320x480-6px-runda-horn banner1b" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>320x480-6px-runda-horn banner1c</h2>
           <p>320x480</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x480-6px-runda-horn/banner1c/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x480-6px-runda-horn/banner1c/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/320x480-6px-runda-horn/Layout/1C 320x480.jpg" alt="Reference 1 for 320x480-6px-runda-horn banner1c" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>320x480-6px-runda-horn banner2a</h2>
           <p>320x480</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x480-6px-runda-horn/banner2a/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x480-6px-runda-horn/banner2a/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/320x480-6px-runda-horn/Layout/2A 320x480.jpg" alt="Reference 1 for 320x480-6px-runda-horn banner2a" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>320x480-6px-runda-horn banner2b</h2>
           <p>320x480</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x480-6px-runda-horn/banner2b/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x480-6px-runda-horn/banner2b/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/320x480-6px-runda-horn/Layout/2B 320x480.jpg" alt="Reference 1 for 320x480-6px-runda-horn banner2b" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>320x480-6px-runda-horn banner2c</h2>
           <p>320x480</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x480-6px-runda-horn/banner2c/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/320x480-6px-runda-horn/banner2c/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/320x480-6px-runda-horn/Layout/2C 320x480.jpg" alt="Reference 1 for 320x480-6px-runda-horn banner2c" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>980x240-6px-runda-horn banner1a</h2>
           <p>980x240</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x240-6px-runda-horn/banner1a/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x240-6px-runda-horn/banner1a/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/980x240-6px-runda-horn/Layout/1A 980x240.jpg" alt="Reference 1 for 980x240-6px-runda-horn banner1a" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>980x240-6px-runda-horn banner1b</h2>
           <p>980x240</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x240-6px-runda-horn/banner1b/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x240-6px-runda-horn/banner1b/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/980x240-6px-runda-horn/Layout/1B 980x240.jpg" alt="Reference 1 for 980x240-6px-runda-horn banner1b" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>980x240-6px-runda-horn banner1c</h2>
           <p>980x240</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x240-6px-runda-horn/banner1c/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x240-6px-runda-horn/banner1c/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/980x240-6px-runda-horn/Layout/1C 980x240.jpg" alt="Reference 1 for 980x240-6px-runda-horn banner1c" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>980x240-6px-runda-horn banner2a</h2>
           <p>980x240</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x240-6px-runda-horn/banner2a/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x240-6px-runda-horn/banner2a/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/980x240-6px-runda-horn/Layout/2A 980x240.jpg" alt="Reference 1 for 980x240-6px-runda-horn banner2a" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>980x240-6px-runda-horn banner2b</h2>
           <p>980x240</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x240-6px-runda-horn/banner2b/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x240-6px-runda-horn/banner2b/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/980x240-6px-runda-horn/Layout/2B 980x240.jpg" alt="Reference 1 for 980x240-6px-runda-horn banner2b" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>980x240-6px-runda-horn banner2c</h2>
           <p>980x240</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x240-6px-runda-horn/banner2c/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x240-6px-runda-horn/banner2c/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/980x240-6px-runda-horn/Layout/2C 980x240.jpg" alt="Reference 1 for 980x240-6px-runda-horn banner2c" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>980x360-6px-runda-horn banner1a</h2>
           <p>980x360</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x360-6px-runda-horn/banner1a/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x360-6px-runda-horn/banner1a/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/980x360-6px-runda-horn/Layout/1A 980x360.jpg" alt="Reference 1 for 980x360-6px-runda-horn banner1a" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>980x360-6px-runda-horn banner1b</h2>
           <p>980x360</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x360-6px-runda-horn/banner1b/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x360-6px-runda-horn/banner1b/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/980x360-6px-runda-horn/Layout/1B 980x360.jpg" alt="Reference 1 for 980x360-6px-runda-horn banner1b" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>980x360-6px-runda-horn banner1c</h2>
           <p>980x360</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x360-6px-runda-horn/banner1c/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x360-6px-runda-horn/banner1c/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/980x360-6px-runda-horn/Layout/1C 980x360.jpg" alt="Reference 1 for 980x360-6px-runda-horn banner1c" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>980x360-6px-runda-horn banner2a</h2>
           <p>980x360</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x360-6px-runda-horn/banner2a/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x360-6px-runda-horn/banner2a/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/980x360-6px-runda-horn/Layout/2A 980x360.jpg" alt="Reference 1 for 980x360-6px-runda-horn banner2a" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>980x360-6px-runda-horn banner2b</h2>
           <p>980x360</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x360-6px-runda-horn/banner2b/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x360-6px-runda-horn/banner2b/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/980x360-6px-runda-horn/Layout/2B 980x360.jpg" alt="Reference 1 for 980x360-6px-runda-horn banner2b" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>980x360-6px-runda-horn banner2c</h2>
           <p>980x360</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x360-6px-runda-horn/banner2c/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x360-6px-runda-horn/banner2c/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/980x360-6px-runda-horn/Layout/2C 980x360.jpg" alt="Reference 1 for 980x360-6px-runda-horn banner2c" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>980x480-6px-runda-horn banner1a</h2>
           <p>980x480</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x480-6px-runda-horn/banner1a/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x480-6px-runda-horn/banner1a/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/980x480-6px-runda-horn/Layout/1A 980x480.jpg" alt="Reference 1 for 980x480-6px-runda-horn banner1a" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>980x480-6px-runda-horn banner1b</h2>
           <p>980x480</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x480-6px-runda-horn/banner1b/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x480-6px-runda-horn/banner1b/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/980x480-6px-runda-horn/Layout/1B 980x480.jpg" alt="Reference 1 for 980x480-6px-runda-horn banner1b" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>980x480-6px-runda-horn banner1c</h2>
           <p>980x480</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x480-6px-runda-horn/banner1c/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x480-6px-runda-horn/banner1c/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/980x480-6px-runda-horn/Layout/1C 980x480.jpg" alt="Reference 1 for 980x480-6px-runda-horn banner1c" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>980x480-6px-runda-horn banner2a</h2>
           <p>980x480</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x480-6px-runda-horn/banner2a/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x480-6px-runda-horn/banner2a/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/980x480-6px-runda-horn/Layout/2A 980x480.jpg" alt="Reference 1 for 980x480-6px-runda-horn banner2a" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>980x480-6px-runda-horn banner2b</h2>
           <p>980x480</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x480-6px-runda-horn/banner2b/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x480-6px-runda-horn/banner2b/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/980x480-6px-runda-horn/Layout/2B 980x480.jpg" alt="Reference 1 for 980x480-6px-runda-horn banner2b" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
       <section class="banner-card">
         <div class="banner-meta">
           <h2>980x480-6px-runda-horn banner2c</h2>
           <p>980x480</p>
-          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x480-6px-runda-horn/banner2c/index.html" target="_blank" rel="noopener noreferrer">Open banner</a>
+          <a class="banner-link" href="-Leverans-Markus/-Leverans-Markus/980x480-6px-runda-horn/banner2c/index.html"
+            target="_blank" rel="noopener noreferrer">Open banner</a>
         </div>
-        <div class="ref-grid">
-          <figure class="ref-card">
-            <img src="-Leverans-Markus/-Leverans-Markus/980x480-6px-runda-horn/Layout/2C 980x480.jpg" alt="Reference 1 for 980x480-6px-runda-horn banner2c" loading="lazy">
-            <figcaption>Ref 1</figcaption>
-          </figure>
-        </div>
+
       </section>
     </div>
   </main>
 </body>
+
 </html>
