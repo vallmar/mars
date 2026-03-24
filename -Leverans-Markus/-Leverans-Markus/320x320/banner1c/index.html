@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="sv">
+
 <head>
   <meta charset="UTF-8">
   <script>
-    (function() {
+    (function () {
       var src = window.API_URL || 'https://s1.adform.net/banners/scripts/rmb/Adform.DHTML.js?bv=' + Math.random();
       var script = document.createElement('script');
       script.src = src;
@@ -16,12 +17,14 @@
   <style>
     @font-face {
       font-family: 'Handelsbanken Sans';
-      src: url('../../HandelsbankenSans-Bold.woff2') format('woff2');
+      src: url('HandelsbankenSans-Bold.woff2') format('woff2');
       font-weight: 700;
       font-style: normal;
       font-display: swap;
     }
-    html, body {
+
+    html,
+    body {
       width: 320px;
       height: 320px;
       margin: 0;
@@ -29,6 +32,7 @@
       overflow: hidden;
       font-family: 'Handelsbanken Sans', sans-serif;
     }
+
     .banner {
       position: relative;
       width: 100%;
@@ -37,47 +41,61 @@
       cursor: pointer;
       background: #005ea8;
     }
+
     .slide-scene {
       position: absolute;
       inset: 0;
       pointer-events: auto;
       z-index: 1;
     }
+
     .photo-frame {
       position: absolute;
       overflow: hidden;
       z-index: 1;
     }
+
     .media-stage,
     .headline-stage,
     .subtext-stage {
       position: absolute;
       inset: 0;
     }
+
     .media-y,
-    .headline-y,
-    .subtext-y {
+    .headline-y {
       transform: translate(0px, 36px);
       will-change: transform;
     }
+
     .media-y.is-ready,
-    .headline-y.is-ready,
-    .subtext-y.is-ready {
+    .headline-y.is-ready {
       transform: translate(0px, 0px);
-      transition: transform 1000ms cubic-bezier(0.7, 0.0, 0.0, 1.0);
+      transition: transform 1000ms cubic-bezier(0.7, 0, 0.2, 1);
     }
-    .media-x,
-    .headline-line,
-    .copy-x {
-      transform: translate(46px, 0px);
+
+    .headline-line {
+      transform: translate(30px, 0px);
       will-change: transform;
     }
-    .media-x.is-ready,
-    .headline-line.is-ready,
-    .copy-x.is-ready {
-      transform: translate(0px, 0px);
-      transition: transform 1000ms cubic-bezier(0.7, 0.0, 0.0, 1.0);
+
+    .copy-x {
+      opacity: 0;
+      transform: translate(30px, 0px);
+      will-change: transform, opacity;
     }
+
+    .headline-line.is-ready {
+      transform: translate(0px, 0px);
+      transition: transform 1000ms cubic-bezier(0.7, 0, 0.2, 1);
+    }
+
+    .copy-x.is-ready {
+      opacity: 1;
+      transform: translate(0px, 0px);
+      transition: transform 1000ms cubic-bezier(0.7, 0, 0.2, 1), opacity 1000ms cubic-bezier(0.7, 0, 0.2, 1);
+    }
+
     .photo {
       width: 100%;
       height: 100%;
@@ -86,43 +104,53 @@
       transform-origin: center center;
       animation: photoZoom 10s linear forwards;
     }
+
     @keyframes photoZoom {
       from {
         transform: scale(1);
       }
+
       to {
         transform: scale(1.1);
       }
     }
+
     .headline,
     .subtext {
       position: absolute;
       z-index: 2;
-      color:#f6f5ee;
+      color: #f6f5ee;
       margin: 0;
       font-weight: 700;
       letter-spacing: -0.04em;
     }
+
     .headline {
       white-space: normal;
       display: flex;
       flex-direction: column;
       gap: 0;
     }
+
     .headline-line {
       display: block;
     }
+
     .subtext {
       white-space: normal;
       letter-spacing: 0.02em;
       font-weight: 700;
     }
+
     .wordmark {
       position: absolute;
       z-index: 3;
       display: block;
-      left: 20px; bottom: 18px; width: 245px;
+      left: 20px;
+      bottom: 20px;
+      width: 280px;
     }
+
     .click-layer {
       position: absolute;
       inset: 0;
@@ -130,17 +158,20 @@
     }
   </style>
 </head>
+
 <body>
   <div class="banner" id="banner">
     <div class="slide-scene is-active">
       <div class="headline-stage headline-y">
-        <div class="headline" style="left: 20px; top: 16px; width: 278px; font-size: 31px; line-height: 29px;">Ett bolån lika personligt som ditt hem</div>
+        <div class="headline" style="left: 20px; top: 16px; width: 278px; font-size: 40px; line-height: 40px;">Ett bolån
+          lika personligt som ditt hem</div>
       </div>
-      <div class="subtext-stage subtext-y">
-        <div class="subtext copy-x" style="left: 20px; top: 141px; width: 236px; font-size: 14px; line-height: 14px;">Få individuellt låneerbjudande i en bank nära dig</div>
+      <div class="subtext-stage">
+        <div class="subtext copy-x" style="left: 20px; top: 164px;  font-size: 17px; line-height: 17px;">Få individuellt
+          låneerbjudande<br>i en bank nära dig</div>
       </div>
     </div>
-    <img class="wordmark" src="../../HB Wordmark HN9 RGB.svg" alt="Handelsbanken" draggable="false">
+    <img class="wordmark" src="HB Wordmark HN9 RGB.svg" alt="Handelsbanken" draggable="false">
     <div class="click-layer" id="clickLayer" aria-label="Open"></div>
   </div>
   <script>
@@ -149,7 +180,7 @@
       var clickLayer = document.getElementById('clickLayer');
       var defaultClickUrl = 'https://www.handelsbanken.se/sv/privat/bolan';
       function getClickUrl() {
-        try { if (window.dhtml && typeof dhtml.getVar === 'function') return dhtml.getVar('clickTAG', defaultClickUrl); } catch (e) {}
+        try { if (window.dhtml && typeof dhtml.getVar === 'function') return dhtml.getVar('clickTAG', defaultClickUrl); } catch (e) { }
         if (typeof window.clickTAG === 'string' && window.clickTAG) return window.clickTAG;
         if (typeof window.clickTag === 'string' && window.clickTag) return window.clickTag;
         return defaultClickUrl;
@@ -158,14 +189,12 @@
 
       var scene = document.querySelector('.slide-scene');
       var mediaY = document.querySelector('.media-y');
-      var mediaX = document.querySelector('.media-x');
       var headlineY = document.querySelector('.headline-y');
-      var subtextY = document.querySelector('.subtext-y');
       var copyX = document.querySelector('.copy-x');
-      var Y_DELAY = 100;
-      var X_DELAY = 900;
+      var Y_DELAY = 0;
+      var X_DELAY = 800;
       var LINE_STAGGER = 40;
-      var SUBCOPY_DELAY = 160;
+      var SUBCOPY_DELAY = 0;
 
       function preload(list, done) {
         var remaining = list.length;
@@ -274,7 +303,7 @@
         var lines = headline ? Array.prototype.slice.call(headline.querySelectorAll('.headline-line')) : [];
 
         window.setTimeout(function () {
-          [mediaY, headlineY, subtextY].forEach(function (element) {
+          [mediaY, headlineY].forEach(function (element) {
             if (element) {
               element.classList.add('is-ready');
             }
@@ -282,9 +311,6 @@
         }, Y_DELAY);
 
         window.setTimeout(function () {
-          if (mediaX) {
-            mediaX.classList.add('is-ready');
-          }
           lines.forEach(function (line, index) {
             window.setTimeout(function () {
               line.classList.add('is-ready');
@@ -304,4 +330,5 @@
     })();
   </script>
 </body>
+
 </html>

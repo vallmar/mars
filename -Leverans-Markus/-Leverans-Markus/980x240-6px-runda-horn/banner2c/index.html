@@ -16,7 +16,7 @@
   <style>
     @font-face {
       font-family: 'Handelsbanken Sans';
-      src: url('../../HandelsbankenSans-Bold.woff2') format('woff2');
+      src: url('HandelsbankenSans-Bold.woff2') format('woff2');
       font-weight: 700;
       font-style: normal;
       font-display: swap;
@@ -55,28 +55,32 @@
       inset: 0;
     }
     .media-y,
-    .headline-y,
-    .subtext-y {
+    .headline-y {
       transform: translate(0px, 26px);
       will-change: transform;
     }
     .media-y.is-ready,
-    .headline-y.is-ready,
-    .subtext-y.is-ready {
+    .headline-y.is-ready {
       transform: translate(0px, 0px);
-      transition: transform 1000ms cubic-bezier(0.7, 0.0, 0.0, 1.0);
+      transition: transform 1000ms cubic-bezier(0.7, 0, 0.2, 1);
     }
-    .media-x,
-    .headline-line,
-    .copy-x {
-      transform: translate(56px, 0px);
+    .headline-line {
+      transform: translate(30px, 0px);
       will-change: transform;
     }
-    .media-x.is-ready,
-    .headline-line.is-ready,
-    .copy-x.is-ready {
+    .copy-x {
+      opacity: 0;
+      transform: translate(30px, 0px);
+      will-change: transform, opacity;
+    }
+    .headline-line.is-ready {
       transform: translate(0px, 0px);
-      transition: transform 1000ms cubic-bezier(0.7, 0.0, 0.0, 1.0);
+      transition: transform 1000ms cubic-bezier(0.7, 0, 0.2, 1);
+    }
+    .copy-x.is-ready {
+      opacity: 1;
+      transform: translate(0px, 0px);
+      transition: transform 1000ms cubic-bezier(0.7, 0, 0.2, 1), opacity 1000ms cubic-bezier(0.7, 0, 0.2, 1);
     }
     .photo {
       width: 100%;
@@ -119,9 +123,9 @@
     }
     .wordmark {
       position: absolute;
-      z-index: 3;
-      display: block;
-      right: 23px; bottom: 17px; width: 279px;
+            z-index: 3;
+            display: block;
+            right: 23px; bottom: 20px; width: 240px;
     }
     .click-layer {
       position: absolute;
@@ -134,18 +138,18 @@
   <div class="banner" id="banner">
     <div class="slide-scene is-active">
       <div class="media-stage media-y">
-        <div class="photo-frame media-x" style="left: 20px; top: 21px; width: 352px; height: 164px; border-radius: 6px;">
-          <img class="photo" src="../1A-2C.jpg" alt="" draggable="false">
+        <div class="photo-frame" style="left: 20px; top: 21px; width: 352px; height: 199px; border-radius: 6px;">
+          <img class="photo" src="2C-980x240-NY.jpg" alt="" draggable="false">
         </div>
       </div>
       <div class="headline-stage headline-y">
-        <div class="headline" style="left: 407px; top: 14px; width: 535px; font-size: 56px; line-height: 52px;">Låt dina förutsättningar avgöra boräntan</div>
+        <div class="headline" style="left: 407px; top: 14px; width: 535px; font-size: 41px; line-height: 46px;">Låt dina förutsättningar<br>avgöra boräntan</div>
       </div>
-      <div class="subtext-stage subtext-y">
-        <div class="subtext copy-x" style="left: 409px; top: 178px; width: 295px; font-size: 17px; line-height: 17px;">Upptäck våra personliga bolån</div>
+      <div class="subtext-stage">
+        <div class="subtext copy-x" style="left: 409px; bottom: 20px; width: 295px; font-size: 17px; line-height: 17px;">Upptäck våra personliga bolån</div>
       </div>
     </div>
-    <img class="wordmark" src="../../HB Wordmark HN9 RGB.svg" alt="Handelsbanken" draggable="false">
+    <img class="wordmark" src="HB Wordmark HN9 RGB.svg" alt="Handelsbanken" draggable="false">
     <div class="click-layer" id="clickLayer" aria-label="Open"></div>
   </div>
   <script>
@@ -163,14 +167,12 @@
 
       var scene = document.querySelector('.slide-scene');
       var mediaY = document.querySelector('.media-y');
-      var mediaX = document.querySelector('.media-x');
       var headlineY = document.querySelector('.headline-y');
-      var subtextY = document.querySelector('.subtext-y');
       var copyX = document.querySelector('.copy-x');
-      var Y_DELAY = 100;
-      var X_DELAY = 900;
+      var Y_DELAY = 0;
+      var X_DELAY = 800;
       var LINE_STAGGER = 40;
-      var SUBCOPY_DELAY = 80;
+      var SUBCOPY_DELAY = 0;
 
       function preload(list, done) {
         var remaining = list.length;
@@ -279,7 +281,7 @@
         var lines = headline ? Array.prototype.slice.call(headline.querySelectorAll('.headline-line')) : [];
 
         window.setTimeout(function () {
-          [mediaY, headlineY, subtextY].forEach(function (element) {
+          [mediaY, headlineY].forEach(function (element) {
             if (element) {
               element.classList.add('is-ready');
             }
@@ -287,9 +289,6 @@
         }, Y_DELAY);
 
         window.setTimeout(function () {
-          if (mediaX) {
-            mediaX.classList.add('is-ready');
-          }
           lines.forEach(function (line, index) {
             window.setTimeout(function () {
               line.classList.add('is-ready');
@@ -303,7 +302,7 @@
         }, X_DELAY);
       }
 
-      preload(["../1A-2C.jpg"], function () {
+      preload(["2C-980x240-NY.jpg"], function () {
         requestAnimationFrame(run);
       });
     })();
