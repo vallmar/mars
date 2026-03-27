@@ -281,7 +281,7 @@ def generate_index_html(width: int, height: int, title: str, layout, slide, shar
       color:#f6f5ee;
       margin: 0;
       font-weight: 700;
-      letter-spacing: -0.02em;
+      letter-spacing: 0em;
     }}
     .headline {{
       white-space: normal;
